@@ -1,0 +1,30 @@
+
+name: Global Build Numbers
+
+on: [push]
+
+permissions:
+  contents: read
+
+jobs:
+  listS3:
+    # runs-on: ${{ matrix.os }}
+    # strategy:
+    #   matrix:
+    #     # os: [macOS-10.14, windows-2016, windows-latest, ubuntu-18.04, ubuntu-latest]
+    #     os: [windows-latest]
+    runs-on: windows-latest
+    steps:
+      - name: install aws cli
+        uses: ohthepain/action-install-aws-cli@v1.0
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-central-1'
+      # All commands after this point have access to the AWS CLI
+      - name: Set version number
+        uses: ohthepain/action-set-version-number@v0.1
+        with:
+            DYNAMO_TABLE_NAME: 'build-numbers'
+            DYNAMO_PARTITION_KEY: 'product-id'
+            PRODUCT_ID: 'game-config'
