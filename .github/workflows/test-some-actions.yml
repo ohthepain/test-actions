@@ -7,7 +7,7 @@ permissions:
   contents: read
 
 jobs:
-  listS3:
+  testBuildNumbers:
     # runs-on: ${{ matrix.os }}
     # strategy:
     #   matrix:
@@ -23,7 +23,7 @@ jobs:
           AWS_DEFAULT_REGION: 'eu-central-1'
       # All commands after this point have access to the AWS CLI
       - name: Set version number
-        uses: ohthepain/action-set-version-number@v0.1
+        uses: ohthepain/global-build-numbers@v0.1
         with:
             DYNAMO_TABLE_NAME: 'build-numbers'
             DYNAMO_PARTITION_KEY: 'product-id'
