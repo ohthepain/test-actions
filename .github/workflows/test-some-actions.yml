@@ -25,8 +25,16 @@ jobs:
       - name: "install aws cli"
         # All commands after this point have access to the AWS CLI
         run: aws s3 ls
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-central-1'
       - name: Set version number
         uses: ohthepain/global-build-numbers@v0.4
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-central-1'
         with:
             DYNAMO_TABLE_NAME: 'build-numbers'
             DYNAMO_PARTITION_KEY: 'product-id'
